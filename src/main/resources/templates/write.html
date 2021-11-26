@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bulma CSS 링크 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <meta property="og:title" content="나만의 항해 블로그" />
+    <meta property="og:description" content="항해99 spring PJ" />
+    <meta property="og:image" content="images/og_img.jpg" />
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+    <link rel="stylesheet" href="/css/main.css">
+    <!--===============================================================================================-->
+
+    <title>항해99 블로그</title>
+
+</head>
+<body>
+<div class="limiter">
+    <div class="container-table100">
+        <div>
+            <img id="banner" src="/images/banner_img.png" alt="">
+        </div>
+        <div id="login-win">
+            <div id="header-title-login-user">
+                <span th:text="${user}"></span>님 환영합니다😃
+            </div>
+        </div>
+        <div class="container">
+            <h2 class="title">포스팅 작성</h2>
+            <br>
+            <form class = container th:action="@{/api/postings}" onsubmit="return check()" th:object="${posting}" method="post">
+                <div class="field">
+                    <label for="title" class="label">제목</label>
+                    <div class="control">
+                        <!--                        <input type="text" class="form-control" id="title"  th:field = "*{title}">-->
+                        <input class="input" type="text" id="title"  th:field = "*{title}" placeholder="제목을 입력해주세요">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="contents" class="label">내용</label>
+                    <div class="control">
+                        <textarea class="textarea" id="contents" th:field = "*{contents}" placeholder="내용을 입력해주세요."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="button" id="write-button">작성하기</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        var user = '[[${user}]]'
+        console.log(user)
+        if(user == 'null'){
+            alert("로그인 후 이용가능합니다.")
+            window.location.replace("/user/login")
+        }
+    });
+
+    function check(){
+        let title =document.getElementById('title').value;
+        let contents =document.getElementById('contents').value;
+        if(title === ""){
+            alert("제목을 입력해주세요.");
+            return false;
+        }
+        if(contents === ""){
+            alert("내용을 입력해주세요.");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

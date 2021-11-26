@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bulma CSS 링크 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <meta property="og:title" content="나만의 항해 블로그"/>
+    <meta property="og:description" content="항해99 spring PJ"/>
+    <meta property="og:image" content="images/og_img.jpg"/>
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/images/icons/favicon.ico"/>
+    <link rel="stylesheet" href="/css/main.css">
+    <!--===============================================================================================-->
+
+    <title>항해99 블로그</title>
+
+</head>
+<body>
+<div class="limiter">
+    <div class="container-table100">
+        <div>
+            <img id="banner" src="/images/banner_img.png" alt="">
+        </div>
+        <div id="login-win">
+            <div id="header-title-login-user">
+                <span th:text="${user}"></span>님 환영합니다😃
+            </div>
+        </div>
+
+        <div class="content-container">
+
+            <h2 class="title"><span th:text="${posting.title}"></span></h2>
+            <br>
+            <h5 class="subtitle is-5"><label>작성자 : </label><span th:text="${posting.user.username}"></span></h5>
+            <div class="box">
+                <p th:text="${posting.contents}"></p>
+            </div>
+            <div>
+                <button class="button" id="close-button" onclick="location.href='/'">닫기</button>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="comment-container">
+            <!--    댓글 작성-->
+            <form th:action="@{/api/postings/}+${posting.id}+@{/comment}" onsubmit="return check1()" method="post"
+                  th:object="${postcomment}">
+                <h5 class="subtitle is-5">Comment 남기기</h5>
+                <br>
+                <div class="input-comment">
+                    <input class="input is-success" type="text" th:field="*{comment}" placeholder="comment를 남겨주세요">
+                    <button type="submit" class="button is-success">등록</button>
+                </div>
+            </form>
+            <br>
+
+            <!--    댓글-->
+            <div class="box" th:each="comment : ${comment}">
+                <p th:text="${comment.user.username}"></p>
+                <br>
+                <p th:id="${comment.id}+commnet" th:text="${comment.comment}"></p>
+
+                <div class="edit-btn">
+                    <button class="button is-warning is-light is-small" th:if="${comment.user.username} == ${user}"
+                            th:id="${comment.id}+editComment"
+                            th:onclick="editPost(${comment.id})">수정
+                    </button>
+
+
+                    <!--댓글 삭제-->
+                    <form th:if="${comment.user.username} == ${user}" action="#"
+                          th:action="@{/api/posting/}+${posting.id}+@{/comment/}+${comment.id}" method="post"
+                          th:onsubmit="return removecheck(${comment.id})" style="display: inline">
+
+                        <button class="button is-danger is-light is-small" type="submit" th:id="${comment.id}+removeComment">삭제
+                        </button>
+                        <input type="hidden" name="_method" value="delete"/>
+                    </form>
+                </div>
+
+                <!--        댓글 수정-->
+                <form th:action="@{/api/posting/}+${posting.id}+@{/comment/}+${comment.id}"
+                      onsubmit="return check2(${comment.id})" method="post" th:object="${editcomment}">
+                    <div th:id="${comment.id}+editdiv" style="display:none;">
+                        <input th:id="${comment.id}+editinput" type="text" th:field="*{comment}"
+                               th:value="${comment.comment}">
+                    </div>
+                    <div th:id="${comment.id}+submit" style="display:none;">
+                        <input type="submit" class="btn btn-primary" value="제출">
+                        <input type="button" class="btn btn-primary" th:onclick="returnPost(${comment.id})"
+                               value="취소">
+                    </div>
+
+                    <input type="hidden" name="_method" value="put"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+
+    });
+
+    // function editPost(id){
+    //     $(`#${id}editdiv`).show();
+    //     $(`#${id}submit`).show();
+    //     $(`#${id}text`).hide();
+    //     $(`#${id}removeComment`).hide();
+    //     $(`#${id}editComment`).hide();
+    //     let text = $(`#${id}text`).text();
+    //     $(`#${id}editinput`).val(text);
+    // }
+    //
+    // function returnPost(id){
+    //     $(`#${id}editdiv`).hide();
+    //     $(`#${id}submit`).hide();
+    //
+    //     $(`#${id}text`).show();
+    //     $(`#${id}removeComment`).show();
+    //     $(`#${id}editComment`).show();
+    // }
+
+    function check1() {
+        let comment = document.getElementById('comment').value;
+        let user = '[[${user}]]'
+        if (comment === "") {
+            alert("댓글을 입력해주세요.");
+            return false;
+        }
+        if (user == "null") {
+            alert("로그인 후 이용해주세요.")
+            window.location.replace("/user/login")
+            return false
+        }
+        return true;
+    }
+
+    function check2(id){
+
+        let comment = document.getElementById(id+"editinput").value;
+        if(comment === ""){
+            alert("댓글을 입력해주세요.");
+            return false;
+        }
+        return true;
+    }
+
+</script>
+
+</body>
+</html>

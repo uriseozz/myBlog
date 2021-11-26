@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bulma CSS 링크 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <meta property="og:title" content="나만의 항해 블로그" />
+    <meta property="og:description" content="항해99 spring PJ" />
+    <meta property="og:image" content="images/og_img.jpg" />
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <link rel="stylesheet" href="css/main.css">
+    <!--===============================================================================================-->
+
+    <title>항해99 블로그</title>
+
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-table100">
+            <div>
+                <img id="banner" src="images/banner_img.png" alt="">
+            </div>
+            <div id="user-btn">
+                <div sec:authorize="isAuthenticated()" id="login-win">
+                    <div id="header-title-login-user">
+                        <span th:text="${user}"></span>님 환영합니다😃
+                    </div>
+                    <form id="my_form" method="post" action="/user/logout">
+                        <button class="button" onclick="document.getElementById('my_form').submit();">로그아웃</button>
+                    </form>
+                </div>
+                <div sec:authorize="!isAuthenticated()" id="logout-win" >
+                    <div>
+                        <a href="/user/login"><button class="button" id="login-btn">로그인</button></a>
+                    </div>
+                    <div>
+                        <a href="/user/signup"><button class="button" id="signup-btn">회원가입</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-table100">
+                <div class="table100 ver1 m-b-110">
+                    <div class="table100-head">
+                        <table>
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column1">제목</th>
+                                <th class="cell100 column2">작성자명</th>
+                                <th class="cell100 column3">작성날짜</th>
+                                <th class="cell100 column4">삭제</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table100-body js-pscroll" id="posting_list">
+                        <table >
+                            <tr class="row100 body" th:each="posting : ${posting}">
+                                <td class="cell100 column1" ><a th:href="@{/api/postings/}+${posting.id}" th:text="${posting.title}"></a></td>
+                                <td class="cell100 column2" th:text="${posting.user.username}"></td>
+                                <td class="cell100 column3" th:text="${posting.user.modifiedAt}"></td>
+
+<!--                                <td class="cell100 column4"><button class="button is-danger" id="${id}-delete" onclick="deleteOne('${id}')">삭제</button></td>-->
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <button class="button" id="write_button" onclick="location.href='/api/write'">글쓰기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--===============================================================================================-->
+
+    <script th:inline="javascript">
+
+        $(document).ready(function() {
+            // HTML 문서를 로드할 때마다 실행합니다.
+
+        })
+
+        window.onload = function () {
+
+        }
+
+
+        // 메모를 삭제합니다.
+        function deleteOne(id) {
+            $.ajax({
+                type: "DELETE",
+                url: `/api/postings/${id}`,
+                success: function (response) {
+                    alert('삭제되었습니다.');
+                    window.location.reload();
+                }
+            })
+        }
+
+
+    </script>
+
+</body>
+</html>
