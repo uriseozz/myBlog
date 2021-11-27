@@ -3,6 +3,7 @@ package com.myblog.myblog.controller;
 import com.myblog.myblog.domain.Comment;
 import com.myblog.myblog.domain.Posting;
 import com.myblog.myblog.dto.CommentRequestDto;
+import com.myblog.myblog.dto.UserEditDto;
 import com.myblog.myblog.repository.CommentRepository;
 import com.myblog.myblog.repository.PostingRepository;
 import com.myblog.myblog.security.UserDetailsImpl;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class CommentController {
@@ -35,19 +37,23 @@ public class CommentController {
         return "redirect:/api/postings/{id}";
     }
 
+    @ResponseBody
     @PutMapping("/api/postings/{id}/comment/{commentId}")
-    public String editComment(@PathVariable Long commentId, @ModelAttribute CommentRequestDto requestDto){
+    public Long editComment(@PathVariable Long commentId, @RequestBody UserEditDto requestDto){
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 ()-> new IllegalArgumentException("댓글이 존재하지 않습니다.")
         );
+//        System.out.println(requestDto.getComment());
+//        System.out.println(comment.getId());
         comment.setComment(requestDto.getComment());
         commentRepository.save(comment);
-        return "redirect:/api/postings/{id}";
+        return commentId;
     }
 
+    @ResponseBody
     @DeleteMapping("/api/postings/{id}/comment/{commentId}")
-    public String deleteComment(@PathVariable Long commentId){
+    public Long deleteComment(@PathVariable Long commentId){
         commentRepository.deleteById(commentId);
-        return "redirect:/api/postings/{id}";
+        return commentId;
     }
 }
