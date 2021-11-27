@@ -32,7 +32,7 @@ public class CommentController {
         comment.setUser(userDetails.getUser());
         comment.setPosting(posting);
         commentRepository.save(comment);
-        return "redirect:/api/Postings/{id}";
+        return "redirect:/api/postings/{id}";
     }
 
     @PutMapping("/api/postings/{id}/comment/{commentId}")
@@ -42,12 +42,12 @@ public class CommentController {
         );
         comment.setComment(requestDto.getComment());
         commentRepository.save(comment);
-        return "redirect:/api/posting/{id}";
+        return "redirect:/api/postings/{id}";
     }
 
     @DeleteMapping("/api/postings/{id}/comment/{commentId}")
     public String deleteComment(@PathVariable Long commentId){
         commentRepository.deleteById(commentId);
-        return "redirect:/api/posting/{id}";
+        return "redirect:/api/postings/{id}";
     }
 }

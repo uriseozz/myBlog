@@ -36,16 +36,15 @@
   <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
 </div>
 </body>
-<script>
-  // $(document).ready(function () {
-  //   let user = '[[${user}]]'
-  //   console.log(user)
-  //   if (user != 'null') {
-  //     alert("이미 로그인 되어있습니다.")
-  //     window.location.replace("/")
-  //
-  //   }
-  // });
+<script th:inline="javascript">
+  $(document).ready(function () {
+     let user = /*[[ ${user} ]]*/null;
+    console.log(user)
+    if (user != null) {
+      alert("이미 로그인 되어있습니다.")
+      window.location.replace("/")
+    }
+  });
 
   const href = location.href;
   const queryString = href.substring(href.indexOf("?")+1)
