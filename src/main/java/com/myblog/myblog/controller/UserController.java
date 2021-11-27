@@ -39,9 +39,8 @@ public class UserController {
     @GetMapping("/user/login")
     public String login(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if(userDetails == null){
-            model.addAttribute("user","null");
+//            model.addAttribute("user","null");
         }else{
-
             model.addAttribute("user",userDetails.getUser().getUsername());
         }
         return "login";

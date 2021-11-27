@@ -70,64 +70,69 @@
                 <div class="edit-btn">
                     <button class="button is-warning is-light is-small" th:if="${comment.user.username} == ${user}"
                             th:id="${comment.id}+editComment"
-                            th:onclick="editPost(${comment.id})">수정
+                            th:onclick="editComment([[${comment.id}]])" style="display: block; display: ">수정
                     </button>
 
 
-                    <!--댓글 삭제-->
-                    <form th:if="${comment.user.username} == ${user}" action="#"
-                          th:action="@{/api/posting/}+${posting.id}+@{/comment/}+${comment.id}" method="post"
-                          th:onsubmit="return removecheck(${comment.id})" style="display: inline">
+<!--                    댓글 삭제-->
+                    <form th:if="${comment.user.username} == ${user}"
+                          th:action="@{/api/postings/}+${posting.id}+@{/comment/}+${comment.id}" method="post"
+                          th:onsubmit="return removecheck(${comment.id})">
 
-                        <button class="button is-danger is-light is-small" type="submit" th:id="${comment.id}+removeComment">삭제
+                        <button class="button is-danger is-light is-small" type="submit" th:id="${comment.id}+removeComment" style="display: block;">삭제
                         </button>
                         <input type="hidden" name="_method" value="delete"/>
                     </form>
                 </div>
 
                 <!--        댓글 수정-->
-                <form th:action="@{/api/posting/}+${posting.id}+@{/comment/}+${comment.id}"
-                      onsubmit="return check2(${comment.id})" method="post" th:object="${editcomment}">
-                    <div th:id="${comment.id}+editdiv" style="display:none;">
-                        <input th:id="${comment.id}+editinput" type="text" th:field="*{comment}"
-                               th:value="${comment.comment}">
-                    </div>
-                    <div th:id="${comment.id}+submit" style="display:none;">
-                        <input type="submit" class="btn btn-primary" value="제출">
-                        <input type="button" class="btn btn-primary" th:onclick="returnPost(${comment.id})"
-                               value="취소">
-                    </div>
+                <div class="edit">
+                    <form th:action="@{/api/posting/}+${posting.id}+@{/comment/}+${comment.id}"
+                          onsubmit="return check2(${comment.id})" method="post" th:object="${editcomment}">
 
-                    <input type="hidden" name="_method" value="put"/>
-                </form>
+                        <div th:id="${comment.id}+editdiv" style="display:none;">
+                            <input class="input is-success" type="text" th:id="${comment.id}+editinput"
+                                   th:field="*{comment}" th:value="${comment.comment}">
+                        </div>
+                        <div th:id="${comment.id}+submit" style="display:none;">
+
+                            <button class="button is-warning is-light is-small" type="submit">등록</button>
+                        </div>
+                        <input type="hidden" name="_method" value="put"/>
+
+                    </form>
+                    <button class="button is-danger is-light is-small" th:id="${comment.id}+cancle"
+                            th:onclick="returnComment([[${comment.id}]])" style="display: none">취소
+                    </button>
+                </div>
+
+
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    $(document).ready(function(){
+<script th:inline="javascript">
 
-    });
+    function editComment(id){
+        $(`#${id}editdiv`).show();
+        $(`#${id}submit`).show();
+        $(`#${id}cancle`).show();
+        $(`#${id}comment`).hide();
+        $(`#${id}removeComment`).hide();
+        $(`#${id}editComment`).hide();
+        let comment = $(`#${id}comment`).text();
+        $(`#${id}editinput`).val(comment);
+    }
 
-    // function editPost(id){
-    //     $(`#${id}editdiv`).show();
-    //     $(`#${id}submit`).show();
-    //     $(`#${id}text`).hide();
-    //     $(`#${id}removeComment`).hide();
-    //     $(`#${id}editComment`).hide();
-    //     let text = $(`#${id}text`).text();
-    //     $(`#${id}editinput`).val(text);
-    // }
-    //
-    // function returnPost(id){
-    //     $(`#${id}editdiv`).hide();
-    //     $(`#${id}submit`).hide();
-    //
-    //     $(`#${id}text`).show();
-    //     $(`#${id}removeComment`).show();
-    //     $(`#${id}editComment`).show();
-    // }
+    function returnComment(id){
+        $(`#${id}editdiv`).hide();
+        $(`#${id}submit`).hide();
+        $(`#${id}cancle`).hide();
+        $(`#${id}comment`).show();
+        $(`#${id}removeComment`).show();
+        $(`#${id}editComment`).show();
+    }
 
     function check1() {
         let comment = document.getElementById('comment').value;

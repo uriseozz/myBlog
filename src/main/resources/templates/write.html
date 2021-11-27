@@ -56,15 +56,7 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function(){
-        var user = '[[${user}]]'
-        console.log(user)
-        if(user == 'null'){
-            alert("로그인 후 이용가능합니다.")
-            window.location.replace("/user/login")
-        }
-    });
+<script th:inline="javascript">
 
     function check(){
         let title =document.getElementById('title').value;
