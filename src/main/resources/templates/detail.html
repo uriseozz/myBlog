@@ -52,7 +52,7 @@
             <!-- 댓글 창-->
             <form th:action="@{/api/postings/}+${posting.id}+@{/comment}" onsubmit="return check1()" method="post"
                   th:object="${postcomment}">
-                <h5 class="subtitle is-5">Comment 남기기</h5>
+                <h5 class="subtitle is-5">댓글 남기기</h5>
                 <br>
                 <!-- 댓글 작성하기-->
                 <div class="input-comment">
@@ -72,7 +72,8 @@
                 <div class="edit-btn">
                     <button class="button is-warning is-light is-small" th:if="${comment.user.username} == ${user}"
                             th:id="${comment.id}+editComment"
-                            th:onclick="editComment([[${comment.id}]])" style="display: block;">수정
+                            th:onclick="editComment([[${comment.id}]])"
+                            style="display: block;">수정
                     </button>
 
 
@@ -81,7 +82,7 @@
                             th:if="${comment.user.username} == ${user}"
                             th:id="${comment.id}+removeComment"
                             th:onclick="deleteComment([[${posting.id}]],[[${comment.id}]])"
-                            style="display: block;">삭제
+                            style="display: block; margin-left: 15px">삭제
                     </button>
                 </div>
 
@@ -92,11 +93,11 @@
                     <button class="button is-warning is-light is-small"
                             th:id="${comment.id}+submit"
                             th:onclick="editText([[${posting.id}]],[[${comment.id}]])"
-                            style="display:none;"> 수정 완료 </button>
+                            style="display:none; margin-left: 10px"> 수정 완료 </button>
 
 
                     <button class="button is-danger is-light is-small" th:id="${comment.id}+cancle"
-                            th:onclick="returnComment([[${comment.id}]])" style="display: none">취소
+                            th:onclick="returnComment([[${comment.id}]])" style="display: none; margin-left: 10px">취소
                     </button>
                 </div>
 
@@ -168,6 +169,7 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (response) {
+                console.log(response)
                 window.location.reload();
             }
         })
@@ -194,6 +196,16 @@
         }
     }
 
+    // comment edit check
+    function check2(id){
+
+        let editcomment =document.getElementById(id+'editinput').value;
+        if(editcomment === ""){
+            alert("댓글을 입력해주세요.");
+            return false;
+        }
+        return true;
+    }
 
 </script>
 

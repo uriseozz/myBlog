@@ -51,12 +51,22 @@
                 </div>
                 <button type="submit" class="button" id="write-button">작성하기</button>
             </form>
+<!--            <button class="button" id="close-bnt" onclick="location.href='/'">닫기</button>-->
+
         </div>
 
     </div>
 </div>
 
 <script th:inline="javascript">
+    $(document).ready(function(){
+        let user = /*[[ ${user} ]]*/null;
+        console.log(user)
+        if(user == 'null'){
+            alert("로그인 후 이용가능합니다.")
+            window.location.replace("/user/login")
+        }
+    });
 
     function check(){
         let title =document.getElementById('title').value;

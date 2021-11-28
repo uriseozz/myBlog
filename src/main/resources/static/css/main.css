@@ -212,10 +212,20 @@ th, td {
   display: block;
 }
 
+/*#close-bnt{*/
+/*  width: 100px;*/
+/*  margin: 50px auto 0;*/
+/*  display: block;*/
+/*}*/
+
 .edit-btn{
+  margin-top: 30px;
   display: flex;
-  margin: 20px auto 0 0;
 }
 .edit {
   display: flex;
+}
+
+.box {
+  margin-bottom: 100px;
 }
