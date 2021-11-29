@@ -7,7 +7,7 @@ import com.myblog.myblog.domain.User;
 import com.myblog.myblog.dto.KakaoUserInfoDto;
 import com.myblog.myblog.repository.UserRepository;
 import com.myblog.myblog.security.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,16 +24,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class KakaoUserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    @Autowired
-    public KakaoUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public void kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청

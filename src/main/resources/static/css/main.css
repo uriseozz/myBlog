@@ -229,3 +229,7 @@ th, td {
 .box {
   margin-bottom: 100px;
 }
+
+.msg {
+  font-size: 13px;
+}

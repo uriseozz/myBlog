@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -15,42 +15,83 @@
     <!-- Bulma CSS 링크 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
-
     <meta charset="UTF-8">
     <title>회원가입 페이지</title>
-
 </head>
 <body>
 <div id="login-form">
     <div id="login-title">Sign up Blog</div>
-
-    <form th:action="@{/user/signup}" th:object="${requestDto}" method="post" novalidate="" class="signup-box">
+    <div class="signup-box">
+<!--    <form action="/user/signup" method="post">-->
         <div class="login-id-label">아이디</div>
-        <input th:field="*{username}" type="text" name="username" id="input_id" class="login-input-box">
-        <div><span th:style="${'color: red; font-size:13px;'}" th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></span></div>
+        <input type="text" name="username" class="login-input-box" id="username">
+        <p id="id-info"><span id="id_msg" class="msg">3~12자의 영문 및 숫자로 입력해주세요</span>
+        </p>
 
         <div class="login-id-label">비밀번호</div>
-        <input type="password" th:field="*{password}" name="password" class="login-input-box" id="password">
-        <div><span th:style="${'color: red; font-size:13px;'}" th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></span></div>
+        <input type="password" name="password" class="login-input-box" id="password">
+        <p id="password-info"><span id="pw_msg" class="msg">4~12자의 영문 및 숫자로 입력해주세요</span>
+        </p>
 
         <div class="login-id-label">비밀번호 확인</div>
-        <input th:field="*{checkpw}" type="password" id="checkpw" name="password" class="login-input-box">
-        <div><span th:style="${'color: red; font-size:13px;'}" th:errors="*{checkpw}" th:if="${#fields.hasErrors('checkpw')}"></span></div>
+        <input type="password" name="password2" class="login-input-box" id="password-check">
+        <p id="passwordck-info"><span id="pw2_msg" class="msg">비밀번호 한번 더 입력해주세요</span>
+        </p>
 
-        <button id="login-id-submit">회원 가입</button>
-    </form>
+        <button id="login-id-submit" onclick="signUp()">회원 가입</button>
+<!--    </form>-->
+    </div>
 </div>
 
 
-<script th:inline="javascript">
-    $(document).ready(function () {
-        let user = /*[[ ${user} ]]*/null;
-        console.log(user)
-        if (user != null) {
-            alert("이미 로그인 되어있습니다.")
-            window.location.replace("/")
-        }
-    });
+<script>
+    function signUp() {
+        // 입력값 저장
+        let username = $("#username").val();
+        let password = $("#password").val();
+        let password2 = $("#password-check").val();
+        let data = {
+            'username': username,
+            'password': password,
+            'password2': password2,
+        };
+        console.log(username, password, password2);
+        $.ajax({
+            type: "POST",
+            url: "/user/signup",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log(response)
+                // 모든 항목이 유효성 검사를 통과했을 때
+                if (response["result"] === "Fail") {
+                    if (response["idCheck"] !== "") {
+                        $("#id_msg").text(response["idCheck"]);
+                        $("#id_msg").css({"color": "red"});
+                    } else {
+                        $("#id_msg").text("사용 가능한 아이디입니다.");
+                        $("#id_msg").css({"color": "green"});
+                    }
+                    if (response["pwCheck"] !== "") {
+                        $("#pw_msg").text(response["pwCheck"]);
+                        $("#pw_msg").css({"color": "red"});
+                    }else {
+                        $("#pw_msg").text("사용 가능한 비밀번호입니다.");
+                        $("#pw_msg").css({"color": "green"});
+                    }
+                    if (response["pwCheck2"] !== "") {
+                        $("#pw2_msg").text(response["pwCheck2"]);
+                        $("#pw2_msg").css({"color": "red"});
+                    } else {
+                        $("#pw2_msg").text("비밀번호가 일치합니다.");
+                        $("#pw2_msg").css({"color": "green"});
+                    }
+                } else {
+                    window.location.href = "/user/login"
+                }
+            }
+        })
+    }
 </script>
 </body>
 </html>
