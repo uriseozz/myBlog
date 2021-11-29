@@ -6,7 +6,7 @@ import com.myblog.myblog.dto.PostingRequestDto;
 import com.myblog.myblog.repository.CommentRepository;
 import com.myblog.myblog.repository.PostingRepository;
 import com.myblog.myblog.security.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Controller
 public class PostingController {
 
     private final PostingRepository postingRepository;
     private final CommentRepository commentRepository;
 
-    @Autowired
-    public PostingController(PostingRepository postingRepository, CommentRepository commentRepository) {
-        this.postingRepository = postingRepository;
-        this.commentRepository = commentRepository;
-    }
 
     //index페이지
     @GetMapping("/")

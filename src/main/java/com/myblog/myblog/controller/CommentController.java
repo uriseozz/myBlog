@@ -7,23 +7,19 @@ import com.myblog.myblog.dto.UserEditDto;
 import com.myblog.myblog.repository.CommentRepository;
 import com.myblog.myblog.repository.PostingRepository;
 import com.myblog.myblog.security.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+@RequiredArgsConstructor
 @Controller
 public class CommentController {
 
     private final CommentRepository commentRepository;
     private final PostingRepository postingRepository;
 
-    @Autowired
-    public CommentController(CommentRepository commentRepository, PostingRepository postingRepository) {
-        this.commentRepository = commentRepository;
-        this.postingRepository = postingRepository;
-    }
 
     @PostMapping("/api/postings/{id}/comment")
     public String createComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @ModelAttribute CommentRequestDto requestDto){
