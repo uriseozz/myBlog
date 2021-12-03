@@ -14,9 +14,4 @@ public class ValidCheckDto {
     private String password;
     private String password2;
 
-    public ValidCheckDto(String username, String password, String password2) {
-        this.username = username;
-        this.password = password;
-        this.password2 = password2;
-    }
 }
