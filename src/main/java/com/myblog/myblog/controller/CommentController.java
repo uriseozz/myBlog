@@ -3,7 +3,6 @@ package com.myblog.myblog.controller;
 import com.myblog.myblog.domain.Comment;
 import com.myblog.myblog.domain.Posting;
 import com.myblog.myblog.dto.CommentRequestDto;
-import com.myblog.myblog.dto.UserEditDto;
 import com.myblog.myblog.repository.CommentRepository;
 import com.myblog.myblog.repository.PostingRepository;
 import com.myblog.myblog.security.UserDetailsImpl;
@@ -35,12 +34,13 @@ public class CommentController {
 
     @ResponseBody
     @PutMapping("/api/postings/{id}/comment/{commentId}")
-    public Long editComment(@PathVariable Long commentId, @RequestBody UserEditDto requestDto){
+    public Long editComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto){
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 ()-> new IllegalArgumentException("댓글이 존재하지 않습니다.")
         );
-//        System.out.println(requestDto.getComment());
-//        System.out.println(comment.getId());
+//        System.out.println(comment.getPosting().getId());
+//        System.out.println(comment.getUser().getUsername());
+//        System.out.println(comment.getComment());
         comment.setComment(requestDto.getComment());
         commentRepository.save(comment);
         return commentId;
