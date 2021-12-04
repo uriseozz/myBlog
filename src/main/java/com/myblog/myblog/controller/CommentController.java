@@ -6,6 +6,7 @@ import com.myblog.myblog.dto.CommentRequestDto;
 import com.myblog.myblog.repository.CommentRepository;
 import com.myblog.myblog.repository.PostingRepository;
 import com.myblog.myblog.security.UserDetailsImpl;
+import com.myblog.myblog.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ public class CommentController {
 
     private final CommentRepository commentRepository;
     private final PostingRepository postingRepository;
+    private final CommentService commentService;
 
 
     @PostMapping("/api/postings/{id}/comment")
@@ -35,15 +37,7 @@ public class CommentController {
     @ResponseBody
     @PutMapping("/api/postings/{id}/comment/{commentId}")
     public Long editComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto){
-        Comment comment = commentRepository.findById(commentId).orElseThrow(
-                ()-> new IllegalArgumentException("댓글이 존재하지 않습니다.")
-        );
-//        System.out.println(comment.getPosting().getId());
-//        System.out.println(comment.getUser().getUsername());
-//        System.out.println(comment.getComment());
-        comment.setComment(requestDto.getComment());
-        commentRepository.save(comment);
-        return commentId;
+        return commentService.update(commentId, requestDto);
     }
 
     @ResponseBody
