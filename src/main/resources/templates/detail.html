@@ -27,9 +27,22 @@
         <div>
             <img id="banner" src="/images/banner_img.png" alt="">
         </div>
-        <div id="login-win">
-            <div id="header-title-login-user">
-                <span th:text="${user}"></span>님 환영합니다😃
+        <div id="user-btn">
+            <div sec:authorize="isAuthenticated()" id="login-win">
+                <div id="header-title-login-user">
+                    <span th:text="${user}"></span>님 환영합니다😃
+                </div>
+                <form id="my_form" method="post" action="/user/logout">
+                    <button class="button" onclick="document.getElementById('my_form').submit();">로그아웃</button>
+                </form>
+            </div>
+            <div sec:authorize="!isAuthenticated()" id="logout-win" >
+                <div>
+                    <a href="/user/login"><button class="button" id="login-btn">로그인</button></a>
+                </div>
+                <div>
+                    <a href="/user/signup"><button class="button" id="signup-btn">회원가입</button></a>
+                </div>
             </div>
         </div>
 

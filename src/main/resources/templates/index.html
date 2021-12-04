@@ -66,7 +66,7 @@
                                 <td class="cell100 column2" th:text="${posting.user.username}"></td>
                                 <td class="cell100 column3" th:text="${posting.user.modifiedAt}"></td>
 
-                                <td class="cell100 column4"><button class="button is-danger" th:onclick="userDeleteOne([[${posting.id}]])">삭제</button></td>
+                                <td class="cell100 column4"><button class="button is-danger" th:onclick="deleteOne([[${posting.id}]])">삭제</button></td>
 
                             </tr>
                         </table>
@@ -83,17 +83,18 @@
 
     <script th:inline="javascript">
 
-        // 메모를 삭제합니다.
-        function userDeleteOne(id){
+        function login(){
             let user = /*[[ ${user} ]]*/null;
+            console.log(user)
             if (user != null) {
-                console.log(user)
+                location.href='/api/write'
+            } else {
                 alert("로그인 후 이용해주세요")
                 window.location.replace("/user/login")
-            } else {
-                deleteOne(id)
             }
         }
+
+        // 메모를 삭제합니다.
 
         function deleteOne(id) {
             $.ajax({
