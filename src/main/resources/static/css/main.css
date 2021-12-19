@@ -121,20 +121,20 @@ th, td {
 }
 
 .column1 {
-  width: 33%;
+  width: 20%;
   padding-left: 40px;
 }
 
 .column2 {
-  width: 18%;
+  width: 40%;
 }
 
 .column3 {
-  width: 22%;
+  width: 20%;
 }
 
 .column4 {
-  width: 10%;
+  width: 20%;
 }
 
 
@@ -232,4 +232,9 @@ th, td {
 
 .msg {
   font-size: 13px;
+}
+
+.bar {
+  display: flex;
+  justify-content: space-between;
 }

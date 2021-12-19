@@ -83,7 +83,15 @@ public class PostingController {
 
     @ResponseBody
     @DeleteMapping("/api/postings/{id}")
-    public Long deletePosting(@PathVariable Long id) {
+    public Long deletePosting(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Posting findPosting = postingRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("게시글이 존재하지 않습니다.")
+        );
+
+        if(!findPosting.getUser().getId().equals(userDetails.getId())) {
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다");
+        }
+
         postingRepository.deleteById(id);
         return id;
     }

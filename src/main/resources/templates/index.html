@@ -52,9 +52,9 @@
                             <thead>
                             <tr class="row100 head">
                                 <th class="cell100 column1">제목</th>
-                                <th class="cell100 column2">작성자명</th>
-                                <th class="cell100 column3">작성날짜</th>
-                                <th class="cell100 column4">삭제</th>
+                                <th class="cell100 column2">내용</th>
+                                <th class="cell100 column3">작성자</th>
+                                <th class="cell100 column4">작성날짜</th>
                             </tr>
                             </thead>
                         </table>
@@ -63,11 +63,9 @@
                         <table >
                             <tr class="row100 body" th:each="posting : ${posting}">
                                 <td class="cell100 column1" ><a th:href="@{/api/postings/}+${posting.id}" th:text="${posting.title}"></a></td>
-                                <td class="cell100 column2" th:text="${posting.user.username}"></td>
-                                <td class="cell100 column3" th:text="${posting.user.modifiedAt}"></td>
-
-                                <td class="cell100 column4"><button class="button is-danger" th:onclick="deleteOne([[${posting.id}]])">삭제</button></td>
-
+                                <td class="cell100 column1" th:text="${posting.contents}"></td>
+                                <td class="cell100 column3" th:text="${posting.user.username}"></td>
+                                <td class="cell100 column4" th:text="${posting.user.modifiedAt}"></td>
                             </tr>
                         </table>
                     </div>
@@ -85,27 +83,14 @@
 
         function login(){
             let user = /*[[ ${user} ]]*/null;
-            console.log(user)
-            if (user != null) {
-                location.href='/api/write'
-            } else {
+            if (user == 'null') {
                 alert("로그인 후 이용해주세요")
                 window.location.replace("/user/login")
+            } else {
+                location.href='/api/write'
             }
         }
 
-        // 메모를 삭제합니다.
-
-        function deleteOne(id) {
-            $.ajax({
-                type: "DELETE",
-                url: `/api/postings/${id}`,
-                success: function (response) {
-                    alert('삭제되었습니다.');
-                    window.location.reload();
-                }
-            })
-        }
 
 
     </script>

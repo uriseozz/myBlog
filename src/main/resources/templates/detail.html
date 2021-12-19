@@ -49,8 +49,17 @@
         <div class="content-container">
 
             <h2 class="title"><span th:text="${posting.title}"></span></h2>
-            <br>
-            <h5 class="subtitle is-5"><label>작성자 : </label><span th:text="${posting.user.username}"></span></h5>
+<!--            <br>-->
+            <div class="bar">
+                <h5 class="subtitle is-5" style="display: block;"><label>작성자 : </label><span th:text="${posting.user.username}"></span></h5>
+                <button th:if="${posting.user.username} == ${user}"
+                        th:onclick="deleteOne([[${posting.id}]])"
+                        style="display: block;"
+                        id="posting_delete"
+                        class="button is-danger">삭제
+                </button>
+            </div>
+
             <div class="box">
                 <p th:text="${posting.contents}"></p>
             </div>
@@ -83,7 +92,8 @@
 
                 <!-- 수정 버튼-->
                 <div class="edit-btn">
-                    <button class="button is-warning is-light is-small" th:if="${comment.user.username} == ${user}"
+                    <button class="button is-warning is-light is-small"
+                            th:if="${comment.user.username} == ${user}"
                             th:id="${comment.id}+editComment"
                             th:onclick="editComment([[${comment.id}]])"
                             style="display: block;">수정
@@ -123,6 +133,19 @@
 </div>
 
 <script th:inline="javascript">
+
+    // 포스팅 삭제
+    function deleteOne(id) {
+        $.ajax({
+            type: "DELETE",
+            url: `/api/postings/${id}`,
+            success: function (response) {
+                console.log(response)
+                alert('삭제되었습니다.');
+                window.location.replace("/");
+            }
+        })
+    }
 
     //수정 버튼 누르면
     function editComment(id) {
@@ -192,11 +215,6 @@
     }
 
 
-
-
-
-
-
     //comment input check
     function check1() {
         let comment = document.getElementById('comment').value;
@@ -205,7 +223,7 @@
             alert("댓글을 입력해주세요.");
             return false;
         }
-        if (user == null) {
+        if (user == 'null') {
             alert("로그인 후 이용해주세요.")
             window.location.replace("/user/login")
             return false

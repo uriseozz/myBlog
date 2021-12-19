@@ -2,14 +2,13 @@ package com.myblog.myblog.service;
 
 import com.myblog.myblog.domain.User;
 import com.myblog.myblog.dto.UserRequestDto;
-import com.myblog.myblog.dto.ValidCheckDto;
 import com.myblog.myblog.repository.UserRepository;
+import com.myblog.myblog.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
@@ -17,43 +16,25 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public void registerUser(ValidCheckDto requestDto) {
+    public String registerUser(UserRequestDto requestDto) {
         String username = requestDto.getUsername();
+        String password = requestDto.getPassword();
+        String password2 = requestDto.getPassword2();
+
+        // 회원 ID 중복 확인
+        Optional<User> found = userRepository.findByUsername(username);
+        if (found.isPresent()) {
+            throw new IllegalStateException("중복된 아이디 입니다.");
+        }
 
         // 패스워드 암호화
-        String password = passwordEncoder.encode(requestDto.getPassword());
+        String enpassword = passwordEncoder.encode(password);
 
-        User user = new User(username, password);
+        // 회원가입 유효성 검사
+        UserValidator.validateUserRegister(username, password, password2);
+
+        User user = new User(username, enpassword);
         userRepository.save(user);
+        return "success";
     }
-
-    // 유효성 체크
-    // 아이디 중복 확인
-    public Boolean checkup(ValidCheckDto checkDto) {
-        String username = checkDto.getUsername();
-        Optional<User> found = userRepository.findByUsername(username);
-        return found.isPresent();
-    }
-
-    // 아이디 유효성 체크
-    public Boolean validUsername(ValidCheckDto checkDto) {
-        String username = checkDto.getUsername();
-        return Pattern.matches("^[0-9a-zA-Z]{3,12}", username);
-    }
-
-    // 비밀번호 유효성 체크
-    public Boolean validPassword(ValidCheckDto checkDto) {
-        String password = checkDto.getPassword();
-        if (password.contains(checkDto.getUsername())) {
-            return false;
-        } else {
-            return Pattern.matches("^[0-9a-zA-Z]{4,12}", password);
-        }
-    }
-
-    // 비밀번호 동일 여부 체크
-    public Boolean checkPasswordEqual(ValidCheckDto checkDto) {
-        return checkDto.getPassword().equals(checkDto.getPassword2());
-    }
-
 }
