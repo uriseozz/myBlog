@@ -8,8 +8,8 @@ http://yuuuri.shop/
 ## 📖프로젝트 미리보기
 <p text-align="center">
 <img src="https://postfiles.pstatic.net/MjAyMjAyMDZfOTkg/MDAxNjQ0MTU1MDg4MDgw.-OFoFvGN4jOqQuH5doJ3V6n-lyc17_XfGwL5OhGapicg.u_77me67f1pZEYW5PGYYCFK8ro5WsmWCulnT_OdMRIQg.JPEG.iyoule/%EC%83%81%EC%84%B8.JPG?type=w966" width="600px" alt="page" />
-<img src="https://postfiles.pstatic.net/MjAyMjAyMDZfMjM3/MDAxNjQ0MTU1MDIyNjA5.jsMC-xmtlpgGfJOsX5I_F8ndO1vNACj-oiRqWzcYA7Mg.OySyghjJh1wXiF8gVMQd4Su1JP6uqQ52Fc50w-_wds0g.JPEG.iyoule/%EB%A9%94%EC%9D%B8.JPG?type=w966" width="500px" alt="page" />
-<img src="https://postfiles.pstatic.net/MjAyMjAyMDZfMTc3/MDAxNjQ0MTU1MDg0MTgw.Xr7FqFoPV_maAw91HlmK_wtZeNK0hEutR02H-bdCo6sg.zW2htqNkDpO6d1eP3Yv_1rg36cQrGcVm0S4ku8b9Kgwg.JPEG.iyoule/%EA%B8%80%EC%93%B0%EA%B8%B0_%ED%8E%98%EC%9D%B4%EC%A7%80.JPG?type=w966" width="500px" alt="page" />
+<img src="https://postfiles.pstatic.net/MjAyMjAyMDZfMjM3/MDAxNjQ0MTU1MDIyNjA5.jsMC-xmtlpgGfJOsX5I_F8ndO1vNACj-oiRqWzcYA7Mg.OySyghjJh1wXiF8gVMQd4Su1JP6uqQ52Fc50w-_wds0g.JPEG.iyoule/%EB%A9%94%EC%9D%B8.JPG?type=w966" width="400px" alt="page" />
+<img src="https://postfiles.pstatic.net/MjAyMjAyMDZfMTc3/MDAxNjQ0MTU1MDg0MTgw.Xr7FqFoPV_maAw91HlmK_wtZeNK0hEutR02H-bdCo6sg.zW2htqNkDpO6d1eP3Yv_1rg36cQrGcVm0S4ku8b9Kgwg.JPEG.iyoule/%EA%B8%80%EC%93%B0%EA%B8%B0_%ED%8E%98%EC%9D%B4%EC%A7%80.JPG?type=w966" width="400px" alt="page" />
 <img src="https://postfiles.pstatic.net/MjAyMjAyMDZfMjI4/MDAxNjQ0MTU1MDQ4MzI2.zBwCgCLCepi3bFX1DdnQ7Dk6dy0hgMd49YZquS2Adgog.QTAx6tYhClUswpkrja69LGfz7ZXQBPvM-M6IrdiiadYg.JPEG.iyoule/%EB%A1%9C%EA%B7%B8%EC%9D%B8.JPG?type=w966" width="275px" alt="page" />
 <img src="https://postfiles.pstatic.net/MjAyMjAyMDZfOCAg/MDAxNjQ0MTU1MDUxNzg1.1vlYWJqrEYljtbZ8KBpP3f0cxFxvu4xQNxurp4GMS4Qg.0hr7swzH5mTSJgh5DQQSfzlZcq4aWW6sn1OA9vw8OTIg.JPEG.iyoule/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.JPG?type=w966" width="300px" alt="page" />
 </p> 
